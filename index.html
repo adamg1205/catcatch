@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChatPulse — Découvre ton chat intérieur</title>
+<link rel="icon" type="image/svg+xml" href="logo.png" />
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body{
+    margin:0; font-family:'Inter',sans-serif;
+    background:#07090b; color:#e6edf3;
+    display:flex; justify-content:center; align-items:center;
+    height:100vh; overflow:hidden; position:relative;
+  }
+  .container{ text-align:center; max-width:600px; padding:20px; z-index:1; position:relative; }
+  h1{ font-size:3rem; margin-bottom:20px; }
+  p{ color:#92a1b2; margin-bottom:40px; }
+  .btn{
+    padding:14px 28px; font-weight:700; border-radius:999px;
+    background:linear-gradient(135deg,#1d9bf0,#7c3aed);
+    border:none; color:#fff; font-size:1.1rem;
+    cursor:pointer; transition:.2s;
+  }
+  .btn:hover{ filter:brightness(1.05); transform:translateY(-2px); }
+
+  /* Arrière-plan avec chats */
+  .bg-cats{
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    overflow:hidden; z-index:0; pointer-events:none;
+  }
+  .cat{
+    position:absolute; font-size:2.5rem; opacity:0.08;
+    animation: float 10s infinite linear;
+  }
+  @keyframes float {
+    from{ transform:translateY(100vh) rotate(0deg); }
+    to{ transform:translateY(-120px) rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+  <!-- Chats flottants -->
+  <div class="bg-cats">
+    <div class="cat" style="left:10%; animation-delay:0s;">🐱</div>
+    <div class="cat" style="left:30%; animation-delay:2s;">😺</div>
+    <div class="cat" style="left:50%; animation-delay:4s;">🐈</div>
+    <div class="cat" style="left:70%; animation-delay:1s;">😻</div>
+    <div class="cat" style="left:85%; animation-delay:3s;">🐾</div>
+  </div>
+
+  <!-- Contenu principal -->
+  <div class="container">
+    <h1>Quel chat es-tu ?</h1>
+    <p>Connecte-toi avec ton compte X pour découvrir ton chat intérieur.</p>
+    <a href="login.php" class="btn">Se connecter avec X</a>
+  </div>
+</body>
+</html>
