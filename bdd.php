@@ -1,9 +1,9 @@
 <?php
 // db.php
-$host = "localhost";
+$host = "catchcat-db";     // ou l'IP de ton serveur MySQL
+$user = "root";          // ton utilisateur MySQL
+$pass = "root";              // ton mot de passe MySQL
 $db   = "catcatch";
-$user = "root";
-$pass = "root";
 
 $conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) {

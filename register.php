@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // ⚡ Paramètres de connexion à la BDD (change avec tes infos)
-$host = "localhost";     // ou l'IP de ton serveur MySQL
+$host = "catchcat-db";     // ou l'IP de ton serveur MySQL
 $user = "root";          // ton utilisateur MySQL
 $pass = "root";              // ton mot de passe MySQL
 $db   = "catcatch";       // le nom de ta base
