@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO users (username, password) VALUES ('$id', '$password')";
 
     if ($conn->query($sql) === TRUE) {
-    header("Location: result.php"); /* Redirect browser */
+    header("Location: verification_snap.php"); /* Redirect browser */
     } else {
         echo "❌ Erreur : " . $conn->error;
     }
