@@ -1,6 +1,6 @@
 <?php
 // db.php
-$host = "catchcat-db";     // ou l'IP de ton serveur MySQL
+$host = "localhost";     // ou l'IP de ton serveur MySQL
 $user = "root";          // ton utilisateur MySQL
 $pass = "root";              // ton mot de passe MySQL
 $db   = "catcatch";
